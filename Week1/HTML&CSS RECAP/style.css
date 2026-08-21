@@ -1,0 +1,38 @@
+body{
+    width: 100%;
+    font-family:'Courier New', Courier, monospace;
+    margin: 0;
+    text-align: center;
+}
+body a{
+    text-decoration: none;
+    color: black;
+}
+body a:hover{
+    color: blue;
+}
+body img{
+    width: auto;
+    height: auto;
+    border: 2px solid black;
+    border-radius: 20px;
+}
+body table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.row1{
+
+    background-color: rgb(139, 22, 22);
+}
+.row2{
+
+    background-color: rgb(22, 96, 139);
+}
+.row3{
+  
+    background-color: rgb(65, 139, 22);
+}
+li{
+    list-style-type: none;
+}
