@@ -1,3 +1,4 @@
+'use strict'
 const score= prompt("Give A Score");
 
 const resultElement = document.getElementById("result");

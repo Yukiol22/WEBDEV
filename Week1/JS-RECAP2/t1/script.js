@@ -1,3 +1,4 @@
+'use strict'
 const fruits = ['apple', 'banana', 'orange', 'grape', 'kiwi'];
 console.log(`Fruits: ${fruits}`)
 console.log(`Length of Fruits: ${fruits.length}`);

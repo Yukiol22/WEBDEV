@@ -1,10 +1,19 @@
 'use strict'
-const x1 = parseFloat(prompt("Enter x1:"));
-const y1 = parseFloat(prompt("Enter y1:"));
-const x2 = parseFloat(prompt("Enter x2:"));
-const y2 = parseFloat(prompt("Enter y2:"))
 
-const distance = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+const numbers = [];
 
-document.getElementById("result").innerText = 
-    `The distance between (${x1}, ${y1}) and (${x2}, ${y2}) is ${distance.toFixed(2)}`
+for (let i = 0 ; i < 5; i++){
+    let x = parseInt(prompt(`give number "${4 - i} left" `))
+    numbers.push(x)
+}
+console.log(numbers)
+
+let y = parseInt(prompt(`Enter a Number to Search:`))
+const and = numbers.includes(y)
+if(!and){
+    console.log(`Number ${y} is not found in the array.`)
+}else{
+  console.log(`Number ${y} is found in the array.`)
+}
+console.log(`Updated Numbers: ${numbers.pop()}`)
+console.log(`Sorted Numbers: ${numbers.sort()}`)
