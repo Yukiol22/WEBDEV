@@ -1,3 +1,4 @@
+'use strict'
 const x = prompt("Give number");
 const resultElement = document.getElementById("result");
 

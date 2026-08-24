@@ -1,17 +1,17 @@
-const a = parseFloat(prompt("Enter length of side A:"));
-const b = parseFloat(prompt("Enter length of side B:"));
-const  c = parseFloat(prompt("Enter length of side C:"));
-
-const invalid = (a + b > c) && (c + b > a) && (a + c > b)
-
-const resultElement = document.getElementById("result");
-
-if (!invalid || a <= 0 || b <= 0 || c <= 0) {
-    resultElement.innerHTML = `<p>The entered side lengths do not form a valid triangle.</p>`;
-} else if (a === b && b === c) {
-    resultElement.innerHTML = `<p>The triangle is Equilateral (all sides are equal).</p>`;
-} else if (a === b || a === c || b === c) {
-    resultElement.innerHTML = `<p>The triangle is Isosceles (two sides are equal).</p>`;
-} else {
-    resultElement.innerHTML = `<p>The triangle is Scalene (all sides are different).</p>`;
+'use strict'
+let valid = false
+const numbers = []
+for (;!valid;){
+    let x =prompt("Enter a number (or 'done' to finish):")
+    if (x == "done"){
+        valid = true
+    }
+    else if (x % 2 == 0){
+        numbers.push(x)
+    }
+}
+if(numbers.length> 0){
+    console.log(`Even Numbers: ${numbers}`)
+}else{
+    console.log("Even Numbers: None")
 }
