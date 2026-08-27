@@ -770,4 +770,44 @@ const restaurants = [
   },
 ];
 
-// your code here
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(success, error);
+  } else {
+   console.log("Geolocation is not supported by this browser.")
+  }
+}
+
+function calculateDistance(x1,y1,x2,y2){
+  return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+}
+
+
+function success(position) {
+  const insertplace = document.querySelector("table")
+  const userLng = position.coords.longitude
+  const userLat =position.coords.latitude
+
+  for (const index in restaurants){
+  const restaurant = restaurants[index];
+  const [restLng, restLat] = restaurant.location.coordinates;
+  restaurant.distance = calculateDistance(userLng, userLat, restLng, restLat);
+}
+  restaurants.sort((a, b) => a.distance - b.distance);
+  console.log(restaurants)
+  for (let i = 0; i < restaurants.length; i++){
+      const restaurant = restaurants[i]
+      const row = document.createElement("tr")
+     row.innerHTML = `
+      <td>${restaurant.name}</td>
+      <td>${restaurant.address}</td>
+    `;
+    insertplace.appendChild(row)
+  }
+}
+
+function error() {
+  alert("Sorry, no position available.");
+}
+getLocation()
