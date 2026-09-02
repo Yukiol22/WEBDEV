@@ -1,45 +1,27 @@
-import { addCat, findCatById, listAllCats,modifyCat, deleteCatById } from '../models/cat-model.js';
-
-const getCat = (req, res) => {
-  res.json(listAllCats());
-};
-
-const getCatById = (req, res) => {
-  const cat = findCatById(req.params.id);
-  if (cat) {
-    res.json(cat);
-  } else {
-    res.sendStatus(404);
-  }
-};
+import { addCat } from '../models/cat-model.js';
 
 const postCat = (req, res) => {
-  const result = addCat(req.body);
-  if (result.cat_id) {
-    res.status(201);
-    res.json({ message: 'New cat added.', result });
-  } else {
-    res.sendStatus(400);
+  console.log('Form data (req.body):', req.body);
+  console.log('File data (req.file):', req.file);
+
+  if (!req.file) {
+    return res.status(400).json({ message: 'No image file uploaded' });
   }
+
+  const { cat_name, weight, owner, birthdate } = req.body;
+  
+  const newCat = addCat({
+    cat_name,
+    weight: Number(weight),
+    owner: Number(owner),
+    birthdate,
+    filename: req.file.filename,
+  });
+
+  res.status(201).json({
+    message: 'Cat added successfully',
+    data: newCat,
+  });
 };
 
-const putCat = (req, res) => {
-  const updatedCat = modifyCat(req.body, req.params.id);
-  if (updatedCat) 
-    res.json({ message: 'Cat updated', result: updatedCat });
-  else{
-    return res.status(404).json({ message: 'Cat not found' });
-  }
-};
-const deleteCat = (req, res) => {
-  const isDeleted = deleteCatById(req.params.id);
-
-  if (isDeleted) {
-    res.json({ message: 'Cat deleted successfully.', id: req.params.id });
-  } else {
-    res.status(404).json({ message: 'Cat not found.' });
-  }
-};
-
-
-export { getCat, getCatById, postCat, putCat, deleteCat };
+export { postCat };
