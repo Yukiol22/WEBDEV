@@ -1,6 +1,12 @@
-import { addCat } from '../models/cat-model.js';
+import {
+  addCat,
+  findCatById,
+  listAllCats,
+  modifyCat,
+  removeCat,
+} from '../models/cat-model.js';
 
-const postCat = (req, res) => {
+const postCat = async (req, res) => {
   console.log('Form data (req.body):', req.body);
   console.log('File data (req.file):', req.file);
 
@@ -22,6 +28,41 @@ const postCat = (req, res) => {
     message: 'Cat added successfully',
     data: newCat,
   });
+
 };
 
-export { postCat };
+
+const getCat = async (req, res) => {
+  await res.json(listAllCats());
+};
+
+const getCatById = async(req, res) => {
+  const cat = await findCatById(req.params.id);
+  if (cat) {
+    res.json(cat);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
+const putCat = async ( req, res) => {
+  const updatedCat = await modifyCat(req.body, req.params.id);
+  if (updatedCat) 
+    res.json({ message: 'Cat updated', result: updatedCat });
+  else{
+    return res.status(404).json({ message: 'Cat not found' });
+  }
+};
+const deleteCat = async (req, res) => {
+  const isDeleted = await removeCat(req.params.id);
+
+  if (isDeleted) {
+    res.json({ message: 'Cat deleted successfully.', id: req.params.id });
+  } else {
+    res.status(404).json({ message: 'Cat not found.' });
+  }
+};
+
+
+export { getCat, getCatById, postCat, putCat, deleteCat };
+
