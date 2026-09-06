@@ -6,29 +6,26 @@ import {
   removeCat,
 } from '../models/cat-model.js';
 
-const postCat = async (req, res) => {
-  console.log('Form data (req.body):', req.body);
-  console.log('File data (req.file):', req.file);
 
-  if (!req.file) {
-    return res.status(400).json({ message: 'No image file uploaded' });
+const postCat = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      const error = new Error('Invalid or missing file');
+      error.status = 400;
+      return next(error);
+    }
+
+    const newCat = {
+      ...req.body,
+      filename: req.file.filename,
+      owner: res.locals.user.user_id,
+    };
+
+    const result = await addCat(newCat);
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
   }
-
-  const { cat_name, weight, owner, birthdate } = req.body;
-  
-  const newCat = addCat({
-    cat_name,
-    weight: Number(weight),
-    owner: Number(owner),
-    birthdate,
-    filename: req.file.filename,
-  });
-
-  res.status(201).json({
-    message: 'Cat added successfully',
-    data: newCat,
-  });
-
 };
 
 
